@@ -78,7 +78,3 @@ export default {
 
 注意:
 在模板里写`<Person />`在运行项目时会被vite提醒,这时换成非单标签`<Person></Person>`
-
-## 03 PotionsAPI与CompositionsAPI
-vue2 --> 是选项式API
-    什么是选项:即像export default里的`name`、`data`
