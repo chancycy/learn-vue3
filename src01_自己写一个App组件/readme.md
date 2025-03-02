@@ -21,8 +21,6 @@ cd learn-vue3 进入新创建的项目
 5. tsconfig.app.json、tsconfig.json、tsconfig.node.json -- ts的三个配置文件 别删就行
 6. vite.config.ts是整个工程的配置文件：安装插件、配置代理等
 
-# 正式开始
-
 ## 01 自己写一个App组件
 注意事项:
 1. 报错就重启下(因为这个时候按照视频里的删除了src,vscode不会立马反应找到对应文件)
@@ -53,28 +51,3 @@ App.vue内容
 }
 </style>
 ```
-
-## 02 写个组件(对应视频P5)
-对于组件: 引入 --> 注册 --> 使用
-结论: vue3兼容vue2的语法
----
-写了一个叫做Person的组件,希望出现在页面里,需要在App.vue的script引入
-App.vue中
-```vue
-<template>
-    <h3 class="app">hello vue3</h3>
-    <Person />  <!-- 使用 -->
-</template>
-<script lang="ts">
-import Person from './components/Person.vue'; // 引入--这句
-export default {
-    name: "App",
-    components: { Person }  // 注册组件
-}
-</script>
-```
-新增Person.vue组件
-代码略,Person里的内容,全部是用vue2的语法写的 --> vue3兼容vue2的语法
-
-注意:
-在模板里写`<Person />`在运行项目时会被vite提醒,这时换成非单标签`<Person></Person>`
