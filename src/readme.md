@@ -80,5 +80,30 @@ export default {
 在模板里写`<Person />`在运行项目时会被vite提醒,这时换成非单标签`<Person></Person>`
 
 ## 03 PotionsAPI与CompositionsAPI
-vue2 --> 是选项式API
-    什么是选项:即像export default里的`name`、`data`
+vue2 --> 是选项式/配置项API
+ - 什么是选项:即像export default里的`name`、`data`、`methods`都是一个个的选项/配置项
+ - 弊端:Options类型的 API，数据、方法、计算属性等，是分散在：data、methods、computed中的，若想新增或者修改一个需求，就需要分别修改：data、methods、computed，不便于维护和复用。
+vue3 --> 组合式API
+- 可以用函数的方式，更加优雅的组织代码，让相关功能的代码更加有序的组织在一起。
+```js
+------vue2:
+export default {
+    data() {
+        return {
+            -功能A-
+            --功能B
+        };
+    },
+    methods: {
+        -功能A-
+        --功能B
+    }
+}
+------vue3:
+function {
+    -功能A-
+}
+function {
+    --功能B
+}
+```
