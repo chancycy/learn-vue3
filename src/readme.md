@@ -110,3 +110,12 @@ function {
 
 ## 04 setup
 首先对代码进行精简 --> 去掉了app组件的'hello vue3'和样式部分
+注意: vue3支持template里写多个组件,而不是像vue2里一定需要用个大标签包起来
+即支持
+```js
+<template>
+  <Person /> <!-- 使用 -->
+  <Person /> <!-- 使用 -->
+  <Person /> <!-- 使用 -->
+</template>
+```
