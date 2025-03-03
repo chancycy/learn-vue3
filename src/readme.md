@@ -119,3 +119,53 @@ function {
   <Person /> <!-- 使用 -->
 </template>
 ```
+setup函数里没有维护this,所以在函数里出现this会报错
+  - 如果在setup里`console.log(this)` --> `undefined` vue3中已经开始弱化this了
+  - setup不是响应式的
+    - 响应式 --> 数据后期如果变化了,用到数据的地方会自动更新
+
+`setup`是`Vue3`中一个新的配置项，值是一个函数。组件中所用到的：数据、方法、计算属性、监视......等等，均配置在`setup`中。
+
+特点如下：
+- `setup`函数返回的对象中的内容，可直接在模板中使用。
+- `setup`中访问`this`是`undefined`。
+- `setup`函数会在`beforeCreate`之前调用，它是“领先”所有钩子执行的。
+```vue
+<template>
+  <div class="person">
+    <h2>姓名：{{name}}</h2>
+    <h2>年龄：{{age}}</h2>
+    <button @click="changeName">修改名字</button>
+    <button @click="changeAge">年龄+1</button>
+    <button @click="showTel">点我查看联系方式</button>
+  </div>
+</template>
+
+<script lang="ts">
+  export default {
+    name:'Person',
+    setup(){
+      // 数据，原来写在data中（注意：此时的name、age、tel数据都不是响应式数据）
+      let name = '张三'
+      let age = 18
+      let tel = '13888888888'
+
+      // 方法，原来写在methods中
+      function changeName(){
+        name = 'zhang-san' //注意：此时这么修改name页面是不变化的
+        console.log(name)
+      }
+      function changeAge(){
+        age += 1 //注意：此时这么修改age页面是不变化的
+        console.log(age)
+      }
+      function showTel(){
+        alert(tel)
+      }
+
+      // 返回一个对象，对象中的内容，模板中可以直接使用
+      return {name,age,tel,changeName,changeAge,showTel}
+    }
+  }
+</script>
+```
