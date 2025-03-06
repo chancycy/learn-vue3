@@ -178,3 +178,38 @@ setup(){
   return ()=> '你好啊！'
 }
 ```
+
+### 04-2 setup 与 Options API(vue2) 的关系
+- `Vue2` 的配置（`data`、`methos`......）中可以访问到 `setup`中的属性、方法。
+  - `c: this.name,   // 能读取到setup中的name,页面会显示'张三'`
+- 但在`setup`中**不能访问到**`Vue2`的配置（`data`、`methos`......）。
+  - `let x = d // 一运行就会报错：setup中不能直接使用data中的数据`
+- 如果与`Vue2`冲突，则`setup`优先。
+  - `age: 90 // 页面显示的age是setup中的age是18而不是90`
+
+```js
+data() {
+        return {
+            a: 100,
+            c: this.name,   // 能读取到setup中的name,页面会显示'张三'
+            d: 900,
+            age: 90 // 页面显示的age是setup中的age是18而不是90
+        }
+    },
+    methods: {
+        b() {
+            console.log('b')
+        }
+    },
+    setup() {
+        console.log(this) //undefined
+
+        // 数据，原来写在data中（注意：此时的name、age、tel数据都不是响应式数据）
+        let name = '张三'
+        let age = 18
+        let tel = '13888888888'
+        // let x = d // 一运行就会报错：setup中不能直接使用data中的数据
+
+        ......
+    }
+```
