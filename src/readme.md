@@ -418,3 +418,65 @@ function test(){
 }
 </script>
 ```
+
+### 05-4【ref 对比 reactive】
+宏观角度看：
+
+> 1. `ref`用来定义：**基本类型数据**、**对象类型数据**；
+>
+> 2. `reactive`用来定义：**对象类型数据**。
+
+- 区别：
+
+> 1. `ref`创建的变量必须使用`.value`（可以使用`volar`插件自动添加`.value`）。
+>
+>    <img src="images/自动补充value.png" alt="自动补充value" style="zoom:50%;border-radius:20px" /> 
+>
+> 2. `reactive`重新分配一个新对象，会**失去**响应式（可以使用`Object.assign`去整体替换）。
+
+- 使用原则：
+> 1. 若需要一个基本类型的响应式数据，必须使用`ref`。
+> 2. 若需要一个响应式对象，层级不深，`ref`、`reactive`都可以。
+> 3. 若需要一个响应式对象，且层级较深，推荐使用`reactive`。
+
+### 05-5 【toRefs 与 toRef】
+
+- 作用：将一个响应式对象中的每一个属性，转换为`ref`对象。
+- 备注：`toRefs`与`toRef`功能一致，但`toRefs`可以批量转换。
+- 语法如下：
+```vue
+<template>
+  <div class="person">
+    <h2>姓名：{{person.name}}</h2>
+    <h2>年龄：{{person.age}}</h2>
+    <h2>性别：{{person.gender}}</h2>
+    <button @click="changeName">修改名字</button>
+    <button @click="changeAge">修改年龄</button>
+    <button @click="changeGender">修改性别</button>
+  </div>
+</template>
+
+<script lang="ts" setup name="Person">
+  import {ref,reactive,toRefs,toRef} from 'vue'
+
+  // 数据
+  let person = reactive({name:'张三', age:18, gender:'男'})
+	
+  // 通过toRefs将person对象中的n个属性批量取出，且依然保持响应式的能力
+  let {name,gender} =  toRefs(person)
+	
+  // 通过toRef将person对象中的gender属性取出，且依然保持响应式的能力
+  let age = toRef(person,'age')
+
+  // 方法
+  function changeName(){
+    name.value += '~'
+  }
+  function changeAge(){
+    age.value += 1
+  }
+  function changeGender(){
+    gender.value = '女'
+  }
+</script>
+```
